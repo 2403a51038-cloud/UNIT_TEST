@@ -1,26 +1,33 @@
+
 name: Python Unit Tests
 
 on:
   push:
-    branches: [main]
+    branches:
+      - master
   pull_request:
-    branches: [main]
+    branches:
+      - master
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set Up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.12'
 
-      - name: Install pytest
-        run: pip install pytest
+      - name: Install Pytest
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
 
-      - name: Run test cases
-        run: python -m pytest -v
+      - name: Run Unit Tests
+        run: |
+          python -m pytest test_calculator.py -v
